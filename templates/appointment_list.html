@@ -1,0 +1,10 @@
+<h2>Your Appointments</h2>
+<ul>
+{% for appointment in appointments %}
+    <li>
+        {{ appointment.provider.user.username }} — {{ appointment.start_time }} to {{ appointment.end_time }} ({{ appointment.status }})
+    </li>
+{% empty %}
+    <li>No appointments found.</li>
+{% endfor %}
+</ul>

@@ -1,0 +1,45 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+
+# Environment
+venv/
+.env
+*.env
+*.venv
+env/
+ENV/
+
+# SQLite database (for dev only, remove if using Postgres/MySQL in prod)
+db.sqlite3
+db.sqlite3-journal
+
+# Django stuff
+*.log
+staticfiles/
+media/
+*.pot
+
+# If you want to ignore migration files (only in dev, not recommended in prod)
+# **/migrations/
+# !**/migrations/__init__.py
+
+# IDE / Editor settings
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS generated
+.DS_Store
+Thumbs.db
+
+# Pytest / Coverage
+.coverage
+htmlcov/
+*.cover
+*.py,cover
+.cache

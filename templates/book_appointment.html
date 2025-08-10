@@ -1,0 +1,71 @@
+<!-- templates/bookings/calendar.html -->
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Book Appointment{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h3 class="mb-0">Book an Appointment</h3>
+            </div>
+            <div class="card-body">
+                <form id="availability-form" method="get" action="{% url 'availability' %}">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            {{ form.service|as_crispy_field }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form.staff|as_crispy_field }}
+                        </div>
+                        <div class="col-md-6">
+                            <label for="date" class="form-label">Date*</label>
+                            <input type="date" class="form-control" id="date" name="date" 
+                                   min="{{ min_date }}" max="{{ max_date }}" required>
+                        </div>
+                        <div class="col-md-6 d-flex align-items-end">
+                            <button type="submit" class="btn btn-primary">
+                                Check Availability
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Set min/max dates
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('date').value = today;
+    
+    // Update staff members based on selected service
+    const serviceSelect = document.querySelector('#id_service');
+    const staffSelect = document.querySelector('#id_staff');
+    
+    serviceSelect.addEventListener('change', function() {
+        const serviceId = this.value;
+        if (!serviceId) return;
+        
+        // Fetch staff members who provide this service
+        fetch(`/api/staff/?service=${serviceId}`)
+            .then(response => response.json())
+            .then(data => {
+                staffSelect.innerHTML = '<option value="">---------</option>';
+                data.forEach(staff => {
+                    const option = document.createElement('option');
+                    option.value = staff.id;
+                    option.textContent = staff.user.name;
+                    staffSelect.appendChild(option);
+                });
+            });
+    });
+});
+</script>
+{% endblock %}

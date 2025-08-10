@@ -1,0 +1,16 @@
+<!-- bookings/templates/bookings/calendar.html -->
+<div id="calendar"></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'timeGridWeek',
+        events: '/api/appointments/',
+        dateClick: function(info) {
+            // Handle appointment creation
+        }
+    });
+    calendar.render();
+});
+</script>
